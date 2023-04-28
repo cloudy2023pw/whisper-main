@@ -84,6 +84,7 @@ def index():
     # Gets the GCS bucket name from the CloudEvent header
     # Example: "storage.googleapis.com/projects/_/buckets/my-bucket"
     bucket = request.headers.get('ce-subject')
+    bucket = bucket.replace("objects/", "")
     download_blob(
         bucket_name="cloudy2023pwproject-bucket",
         source_blob_name=bucket,
