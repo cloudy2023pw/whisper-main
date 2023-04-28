@@ -85,14 +85,14 @@ def index():
     # Example: "storage.googleapis.com/projects/_/buckets/my-bucket"
     bucket = request.headers.get('ce-subject')
     bucket = bucket.replace("objects/", "")
+    filename = bucket.split("/")[-1]
     download_blob(
         bucket_name="cloudy2023pwproject-bucket",
         source_blob_name=bucket,
-        destination_file_name="local_file",
+        destination_file_name=filename,
     )
     model = whisper.load_model("tiny.en.pt")
-    result = model.transcribe("local_file")
-    filename = bucket.split("/")[-1]
+    result = model.transcribe(filename)
     text_file = open(f"{filename}.txt", "w")
     n = text_file.write('Welcome to pythonexamples.org')
     text_file.close()
