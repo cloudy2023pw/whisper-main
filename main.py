@@ -85,7 +85,7 @@ def index():
     # Example: "storage.googleapis.com/projects/_/buckets/my-bucket"
     bucket = request.headers.get('ce-subject')
     download_blob(
-        bucket_name="cloudy2023pwproject.appspot.com",
+        bucket_name="cloudy2023pwproject-bucket",
         source_blob_name=bucket,
         destination_file_name="local_file",
     )
@@ -96,7 +96,7 @@ def index():
     n = text_file.write('Welcome to pythonexamples.org')
     text_file.close()
     upload_blob(
-        bucket_name="cloudy2023pwproject.appspot.com",
+        bucket_name="cloudy2023pwproject-bucket",
         source_file_name="{filename}.txt",
         destination_blob_name=f"files/{filename}.txt",
     )
