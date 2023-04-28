@@ -94,11 +94,11 @@ def index():
     model = whisper.load_model("tiny.en.pt")
     result = model.transcribe(filename)
     text_file = open(f"{filename}.txt", "w")
-    n = text_file.write('Welcome to pythonexamples.org')
+    n = text_file.write(result["text"])
     text_file.close()
     upload_blob(
         bucket_name="cloudy2023pwproject-bucket",
-        source_file_name="{filename}.txt",
+        source_file_name=f"{filename}.txt",
         destination_blob_name=f"files/{filename}.txt",
     )
     print(result["text"])
