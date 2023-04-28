@@ -27,6 +27,7 @@ COPY requirements.txt ./
 
 # Install production dependencies.
 RUN pip install -r requirements.txt
+RUN apt-get install ffmpeg
 
 # Copy local code to the container image.
 ENV APP_HOME /app
