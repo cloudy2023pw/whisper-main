@@ -83,12 +83,12 @@ app = Flask(__name__)
 def index():
     # Gets the GCS bucket name from the CloudEvent header
     # Example: "storage.googleapis.com/projects/_/buckets/my-bucket"
+    bucket = request.headers.get('ce-subject')
     download_blob(
         bucket_name="cloudy2023pwproject.appspot.com",
         source_blob_name=bucket,
         destination_file_name="local_file",
     )
-    bucket = request.headers.get('ce-subject')
     model = whisper.load_model("tiny.en.pt")
     result = model.transcribe("local_file")
     filename = bucket.split("/")[-1]
