@@ -26,7 +26,7 @@ ENV PYTHONUNBUFFERED True
 COPY requirements.txt ./
 
 # Install production dependencies.
-RUN  apt-get update && apt-get install 'ffmpeg' 
+RUN  apt-get update && apt-get -y install 'ffmpeg' 
 RUN pip install -r requirements.txt
 
 # Copy local code to the container image.
