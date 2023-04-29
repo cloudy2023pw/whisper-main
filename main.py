@@ -87,7 +87,7 @@ def index():
     bucket = bucket.replace("objects/", "")
     filename = bucket.split("/")[-1]
     download_blob(
-        bucket_name="cloudy2023pwproject-bucket",
+        bucket_name="cloudy2023pwproject.appspot.com",
         source_blob_name=bucket,
         destination_file_name=filename,
     )
