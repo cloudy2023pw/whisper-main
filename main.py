@@ -73,6 +73,18 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
     print(
         f"File {source_file_name} uploaded to {destination_blob_name}."
     )
+    
+    
+def delete_blob(bucket_name, source_file_name, delete_blob_name):
+    
+    storage_client = storage.Client(project="322004009779")
+    bucket = storage_client.bucket(bucket_name)
+
+    blobs = bucket.list_blobs(prefix=delete_blob_name)
+
+    for blob in blobs:
+        blob.delete()
+        print(f"File {delete_blob_name} deleted.")
 
 app = Flask(__name__)
 # [END eventarc_audit_storage_server]
@@ -90,6 +102,11 @@ def index():
         bucket_name="cloudy2023pwproject.appspot.com",
         source_blob_name=bucket,
         destination_file_name=filename,
+    )
+    delete_blob(
+        bucket_name="cloudy2023pwproject.appspot.com",
+        source_blob_name=bucket,
+        delete_blob_name=filename,
     )
     model = whisper.load_model("tiny.en.pt")
     result = model.transcribe(filename)
