@@ -108,7 +108,11 @@ def index():
         file_name=filename,
     )
     model = whisper.load_model("tiny.en.pt")
-    result = model.transcribe(filename)
+    try:
+        result = model.transcribe(filename)
+    except:
+        print("An error occured with providing the file to the model")
+        return (f"File from bucket: {bucket} corrupted or wrong format", 400)
     text_file = open(f"{filename}.txt", "w")
     n = text_file.write(result["text"])
     text_file.close()
