@@ -117,7 +117,7 @@ def index():
     n = text_file.write(result["text"])
     text_file.close()
     upload_blob(
-        bucket_name="cloudy2023pwproject-bucket",
+        bucket_name="cloudy2023pwproject.appspot.com",
         source_file_name=f"{filename}.txt",
         destination_blob_name=f"files/{filename}.txt",
     )
