@@ -98,6 +98,8 @@ def index():
     bucket = request.headers.get('ce-subject')
     bucket = bucket.replace("objects/", "")
     filename = bucket.split("/")[-1]
+    if bucket.startswith('files'):
+        return (f"File {bucket} is result, not input", 200)
     try:
         download_blob(
             bucket_name="cloudy2023pwproject.appspot.com",
@@ -107,11 +109,11 @@ def index():
     except:
         return (f"File {bucket} not found", 200)
     
-    if bucket.startswith('upload'):
-        delete_blob(
-            bucket_name="cloudy2023pwproject.appspot.com",
-            file_name=bucket,
-        )
+    
+    delete_blob(
+        bucket_name="cloudy2023pwproject.appspot.com",
+        file_name=bucket,
+    )
     model = whisper.load_model("tiny.en.pt")
     try:
         result = model.transcribe(filename)
