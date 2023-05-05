@@ -98,21 +98,26 @@ def index():
     bucket = request.headers.get('ce-subject')
     bucket = bucket.replace("objects/", "")
     filename = bucket.split("/")[-1]
-    download_blob(
-        bucket_name="cloudy2023pwproject.appspot.com",
-        source_blob_name=bucket,
-        destination_file_name=filename,
-    )
-    delete_blob(
-        bucket_name="cloudy2023pwproject.appspot.com",
-        file_name=filename,
-    )
+    try:
+        download_blob(
+            bucket_name="cloudy2023pwproject.appspot.com",
+            source_blob_name=bucket,
+            destination_file_name=filename,
+        )
+    except:
+        return (f"File {bucket} not found", 200)
+    
+    if bucket.startswith('upload'):
+        delete_blob(
+            bucket_name="cloudy2023pwproject.appspot.com",
+            file_name=bucket,
+        )
     model = whisper.load_model("tiny.en.pt")
     try:
         result = model.transcribe(filename)
     except:
         print("An error occured with providing the file to the model")
-        return (f"File from bucket: {bucket} corrupted or wrong format", 400)
+        return (f"File from bucket: {bucket} corrupted or wrong format", 200)
     text_file = open(f"{filename}.txt", "w")
     n = text_file.write(result["text"])
     text_file.close()
